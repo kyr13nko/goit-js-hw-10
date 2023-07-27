@@ -12,16 +12,14 @@ function fetchBreeds() {
 }
 
 function fetchCatByBreed(breedID) {
-  return fetch(
-    `${BASE_URL}/images/${breedID}?api_key=${API_KEY}`
-    // `${BASE_URL}/images/?breed_ids=${breedID}&api_key=${API_KEY}`
-    // https://api.thecatapi.com/v1/images/${breedId}?api_key=${API_KEY}
-  ).then(response => {
-    if (!response.ok) {
-      throw new Error(response.status);
+  return fetch(`${BASE_URL}images/${breedID}?api_key=${API_KEY}`).then(
+    response => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
     }
-    return response.json();
-  });
+  );
 }
 
 export { fetchBreeds, fetchCatByBreed };

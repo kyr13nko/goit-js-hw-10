@@ -9,12 +9,12 @@ const refs = {
 
 refs.select.addEventListener('change', onSelectChange);
 
-test();
+insertSelectValues();
 
-function test() {
+function insertSelectValues() {
   fetchBreeds()
     .then(data => {
-      insertSelectValues(data);
+      createSelectMarkup(data);
     })
     .catch(console.warn);
 }
@@ -22,21 +22,30 @@ function test() {
 function onSelectChange(event) {
   const breedID = event.target.value;
 
-  console.dir(event.target);
-
   fetchCatByBreed(breedID)
     .then(data => {
-      console.log(data);
+      createCatInfoMarkup(data);
     })
     .catch(console.warn);
 }
 
-function insertSelectValues(arr) {
+function createSelectMarkup(arr) {
   const selectValues = arr
-    .map(({ id, name }) => {
-      return `<option value="${id}">${name}</option>`;
+    .map(({ reference_image_id, name }) => {
+      return `<option value="${reference_image_id}">${name}</option>`;
     })
     .join('');
 
   refs.select.insertAdjacentHTML('beforeend', selectValues);
+}
+
+function createCatInfoMarkup({ breeds, url }) {
+  const selectInfo = `
+    <img src="${url}" alt="${breeds[0].name}" width=300>
+    <h2>Breed: ${breeds[0].name}</h2>
+    <p>About: ${breeds[0].description}</p>
+    <p>Temperaments: ${breeds[0].temperament}</p>
+  `;
+
+  refs.info.insertAdjacentHTML('beforeend', selectInfo);
 }

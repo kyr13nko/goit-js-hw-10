@@ -1,5 +1,5 @@
 body {
-  background-color: bisque;
+  background-color: aliceblue;
 }
 
 .loader {
@@ -7,6 +7,9 @@ body {
   height: 48px;
   border-radius: 50%;
   position: relative;
+
+  margin: 20px auto;
+
   animation: rotate 1s linear infinite;
 }
 .loader::before,
@@ -54,4 +57,11 @@ body {
 
 .is-hidden {
   display: none;
+}
+
+.cat-info {
+  display: flex;
+  gap: 16px;
+  max-width: 1024px;
+  margin-top: 16px;
 }

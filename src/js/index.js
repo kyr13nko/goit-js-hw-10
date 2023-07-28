@@ -12,21 +12,37 @@ refs.select.addEventListener('change', onSelectChange);
 insertSelectValues();
 
 function insertSelectValues() {
+  refs.loader.classList.remove('is-hidden');
+  refs.select.classList.add('is-hidden');
   fetchBreeds()
     .then(data => {
       createSelectMarkup(data);
+      refs.select.classList.remove('is-hidden');
     })
-    .catch(console.warn);
+    .catch(() => {
+      refs.error.classList.remove('is-hidden');
+    })
+    .finally(() => {
+      refs.loader.classList.add('is-hidden');
+    });
 }
 
 function onSelectChange(event) {
+  refs.loader.classList.remove('is-hidden');
+  refs.info.innerHTML = '';
+
   const breedID = event.target.value;
 
   fetchCatByBreed(breedID)
     .then(data => {
       createCatInfoMarkup(data);
     })
-    .catch(console.warn);
+    .catch(() => {
+      refs.error.classList.remove('is-hidden');
+    })
+    .finally(() => {
+      refs.loader.classList.add('is-hidden');
+    });
 }
 
 function createSelectMarkup(arr) {
